@@ -46,6 +46,7 @@ class Monster:
     def select_destination(self, SCREEN_WIDTH=800, SCREEN_HEIGHT=600):
 
         if self.pos != self.dest:
+            print(f"Monster is moving towards {self.dest}")
             return self.dest
 
         else:

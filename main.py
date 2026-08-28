@@ -1,6 +1,7 @@
 import pygame
 from Character import Character
 from Monster import Monster
+from Board import Board
 
 pygame.init()
 
@@ -10,8 +11,9 @@ SCREEN_HEIGHT = 600
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("My Game")
 
-Ezekiel = Character(pos=(100, 100))
-Monster = Monster(pos=(400, 300))
+Ezekiel = Character(pos=(2, 2))
+Monster = Monster(pos=(4, 4))
+Board = Board(player_pos=Ezekiel.pos, monster_pos=Monster.pos, width=40, height=30)
 
 running = True
 while running:
@@ -32,16 +34,8 @@ while running:
                     running = False
 
                 # Monster movement
-                monster_dir = Monster.select_destination(SCREEN_WIDTH, SCREEN_HEIGHT)
-                if monster_dir:
-                    print(Monster.move(monster_dir))
 
-                if Ezekiel.pos == Monster.pos:
-                    print("Ezekiel has encountered the Monster!")
-
-    screen.fill((255/2, 255/2, 255/2))
-    pygame.draw.rect(screen, (0, 0, 225), (Ezekiel.pos[0], Ezekiel.pos[1], 50, 50))
-    pygame.draw.rect(screen, (225, 0, 0), (Monster.pos[0], Monster.pos[1], 50, 50))
+            Board.draw_board(screen)
 
     pygame.display.update()
 
