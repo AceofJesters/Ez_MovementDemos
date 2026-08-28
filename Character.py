@@ -1,5 +1,3 @@
-from Board import Board
-
 EZ_KEY = 1
 
 class Character:

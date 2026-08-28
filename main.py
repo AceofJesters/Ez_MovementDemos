@@ -44,8 +44,7 @@ while running:
                     running = False
 
                 if ez_moved:
-                    #move monster
-                    pass
+                    Monster.move(Board)
 
                 Board.move_entity(EZ_KEY, Ezekiel.pos)
                 Board.move_entity(MON_KEY, Monster.pos)

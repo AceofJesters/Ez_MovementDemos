@@ -39,8 +39,6 @@ class Board:
         if destination[0] in range(self.width) and destination[1] in range(self.height):
             if entity_key == EZ_KEY:
                 self.player_pos = destination
-            elif entity_key == MON_KEY:
-                self.monster_pos = destination
             self.set_positions()
             return True
         else:
