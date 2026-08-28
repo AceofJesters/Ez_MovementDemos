@@ -27,18 +27,31 @@ while running:
     if not moved:
         for event in pygame.event.get():
             if event.type == pygame.KEYDOWN:
+                ez_moved = False
                 if event.key == pygame.K_w:
                     print(Ezekiel.move(Board, "up"))
+                    ez_moved = True
                 elif event.key == pygame.K_s:
                     print(Ezekiel.move(Board, "down"))
+                    ez_moved = True
                 elif event.key == pygame.K_a:
                     print(Ezekiel.move(Board, "left"))
+                    ez_moved = True
                 elif event.key == pygame.K_d:
                     print(Ezekiel.move(Board, "right"))
+                    ez_moved = True
                 elif event.key == pygame.K_c:
                     running = False
+
+                if ez_moved:
+                    #move monster
+                    pass
+
                 Board.move_entity(EZ_KEY, Ezekiel.pos)
                 Board.move_entity(MON_KEY, Monster.pos)
+                if Ezekiel.pos == Monster.pos:
+                    print("ez got eaten :(")
+                    running = False
 
             Board.draw_board(screen)
 
