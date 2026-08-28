@@ -58,3 +58,14 @@ class Monster:
 
             dir = self.find_direction()
             return dir
+
+
+    def check_detection(self, player_pos):
+
+        detection_range = 10
+
+        # find distance between player and monster
+        distance = ((self.pos[0] - player_pos[0]) ** 2 + (self.pos[1] - player_pos[1]) ** 2) ** 0.5
+
+        if distance <= detection_range:
+            self.dest = player_pos
