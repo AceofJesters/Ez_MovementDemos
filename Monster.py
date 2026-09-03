@@ -1,4 +1,5 @@
 import random
+from pathfind import pathfind
 
 MON_KEY = 2
 
@@ -7,21 +8,18 @@ class Monster:
     def __init__(self, pos=(0, 0)):
         self.pos = pos
         self.dest = pos
+        self.path = []
 
     def move(self, Board):
 
         print("monpos is " + str(self.pos))
         print("mondest is " + str(self.dest))
         if self.pos != self.dest:
+            # increment position along path by a random number between 1 and 3
             print(f"Monster is moving towards {self.dest}")
             return self.dest
         else:
             self.select_destination(Board)
-            # increment position along path by a random number between 1 and 3
-
-    
-    def pathfind(self):
-        pass
 
     
     def select_destination(self, Board):
@@ -34,7 +32,7 @@ class Monster:
                     valid_pos = True
                     self.dest = (destx, desty)
 
-            path = self.pathfind()
+            self.path = pathfind()
 
 
     def check_detection(self, player_pos):
