@@ -5,19 +5,23 @@ MON_KEY = 2
 
 class Monster:
 
-    def __init__(self, pos=(0, 0)):
+# TODO: Why are you moving down your path backwards that's fucked up stop that
+
+    def __init__(self, pos=(0, 0), dest=(10, 10), Board=None):
         self.pos = pos
-        self.dest = pos
-        self.path = []
+        self.dest = dest
+        self.path = pathfind(self.pos, self.dest)
 
-    def move(self, Board):
+    def move(self, Board, player_pos):
 
-        print("monpos is " + str(self.pos))
-        print("mondest is " + str(self.dest))
-        if self.pos != self.dest:
+        if self.check_detection(player_pos):
+            self.dest = player_pos
+            self.path = pathfind(self.pos, self.dest)
+        if len(self.path) > 0:
             # increment position along path by a random number between 1 and 3
             print(f"Monster is moving towards {self.dest}")
-            return self.dest
+            self.pos = self.path.pop()
+            return self.pos
         else:
             self.select_destination(Board)
 
@@ -32,7 +36,7 @@ class Monster:
                     valid_pos = True
                     self.dest = (destx, desty)
 
-            self.path = pathfind()
+            self.path = pathfind(self.pos, self.dest)
 
 
     def check_detection(self, player_pos):

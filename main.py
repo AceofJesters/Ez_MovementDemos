@@ -16,8 +16,8 @@ MON_KEY = 2
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
 pygame.display.set_caption("ezzie <3")
 
-Ezekiel = Character(pos=(2, 2))
-Monster = Monster(pos=(4, 4))
+Ezekiel = Character(pos=(12, 12))
+Monster = Monster(pos=(0, 0), dest=(10, 10))
 Board = Board(PIXEL_SIZE=PIXEL_SIZE, player_pos=Ezekiel.pos, monster_pos=Monster.pos, width=40, height=30)
 
 running = True
@@ -40,14 +40,15 @@ while running:
                 elif event.key == pygame.K_d:
                     print(Ezekiel.move(Board, "right"))
                     ez_moved = True
-                elif event.key == pygame.K_c:
+                elif event.key == pygame.K_c or event.key == pygame.K_q:
                     running = False
 
                 if ez_moved:
-                    Monster.move(Board)
+                    Monster.move(Board, Ezekiel.pos)
 
-                Board.move_entity(EZ_KEY, Ezekiel.pos)
-                Board.move_entity(MON_KEY, Monster.pos)
+                Board.monster_pos = Monster.pos
+                Board.player_pos = Ezekiel.pos
+                Board.draw_board(screen)
                 if Ezekiel.pos == Monster.pos:
                     print("ez got eaten :(")
                     running = False
