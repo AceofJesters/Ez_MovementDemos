@@ -20,10 +20,17 @@ class Monster:
         if len(self.path) > 0:
             # increment position along path by a random number between 1 and 3
             print(f"Monster is moving towards {self.dest}")
-            self.pos = self.path.pop()
+            self.pos = self.step()
             return self.pos
         else:
             self.select_destination(Board)
+
+
+    def step(self):
+        # I'm certain there's a better way to do this but I cannot figure it out right now
+        step = self.path[0]
+        self.path = self.path[1:]
+        return step
 
     
     def select_destination(self, Board):
