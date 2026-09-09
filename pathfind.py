@@ -1,15 +1,20 @@
 from math import sqrt
+from collections import deque
 
 def pathfind(start, goal):
 
     current_node = Pathnode(start, goal, None)
-    path = []
+    path = deque()
     open_list = [current_node]
     closed_list = []
     walls = []
 
+    # We had an infinite issue when the monster moves onto the player
+    if start == goal:
+        return
+
     while True:
-        pass
+        # pass
 
         # add each neighbour of current cell to open list w/ current node saved as parent
         neighbours_coords = get_neighbours(current_node.coords)
@@ -18,6 +23,7 @@ def pathfind(start, goal):
             if neighbour == goal:
                 new_node = Pathnode(neighbour, goal, current_node)
                 path.append(new_node.coords)
+                path.reverse()
                 return path
             # 	- ensure it's not on the open/closed list or a wall
             if neighbour not in open_list and neighbour not in closed_list and neighbour not in walls:

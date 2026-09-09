@@ -1,38 +1,41 @@
-import random
+from collections import deque
+
 from pathfind import pathfind
+from WorldObject import WorldObject
 
-MON_KEY = 2
-
-class Monster:
+class Monster(WorldObject):
 
     def __init__(self, pos=(0, 0)):
-        self.pos = pos
+        super().__init__(pos)
         self.dest = pos
-        self.path = []
+        self.path = deque
 
     def move(self, Board):
+        # Multiple movements is handled in the main loop. This is just the logic for individual movements.
 
         print("monpos is " + str(self.pos))
         print("mondest is " + str(self.dest))
         if self.pos != self.dest:
-            # increment position along path by a random number between 1 and 3
-            print(f"Monster is moving towards {self.dest}")
+
+            if len(self.path) != 0:
+                self.pos = self.path.pop()
+                if(Board.move_entity(self.pos)):
+                    print(f"Monster has moved to {self.dest}") 
+
+            
             return self.dest
-        else:
-            self.select_destination(Board)
 
     
-    def select_destination(self, Board):
-            valid_pos = False
+    def select_destination(self, Board, world_object):
+            
+            target = world_object.get_position()
+            print("monster targetting " + str(target))
 
-            while not valid_pos:
-                destx = random.randint(0, Board.width)
-                desty = random.randint(0, Board.height)
-                if Board.move_entity(MON_KEY, self.pos):
-                    valid_pos = True
-                    self.dest = (destx, desty)
+            self.dest = (target[0], target[1])
 
-            self.path = pathfind()
+            self.path = pathfind(self.pos, self.dest)
+            print(str(self.path))
+
 
 
     def check_detection(self, player_pos):

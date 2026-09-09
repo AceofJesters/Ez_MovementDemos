@@ -1,22 +1,18 @@
 import pygame
 
-EZ_KEY = 1
-MON_KEY = 2
-
 class Board:
-    def __init__(self, PIXEL_SIZE, player_pos, monster_pos, width=40, height=30):
+    def __init__(self, PIXEL_SIZE, units, sprite_group, width=40, height=30):
         self.PIXEL_SIZE = PIXEL_SIZE
-        self.player_pos = player_pos
-        self.monster_pos = monster_pos
+        self.units = units
+        self.sprite_group = sprite_group
         self.width = width
         self.height = height
         self.grid = self.set_positions()
-
-
+        
     def set_positions(self):
         self.grid = [[0 for _ in range(self.width)] for _ in range(self.height)]
-        self.grid[self.player_pos[1]][self.player_pos[0]] = 1
-        self.grid[self.monster_pos[1]][self.monster_pos[0]] = 2
+        for obj in self.units:
+            self.grid[obj.get_position()[1]][obj.get_position()[0]] = obj
         return self.grid
 
 
@@ -26,19 +22,19 @@ class Board:
             for j in range(self.width):
                 rect = pygame.Rect(j * self.PIXEL_SIZE, i * self.PIXEL_SIZE, self.PIXEL_SIZE, self.PIXEL_SIZE)
 
-                if self.grid[i][j] == EZ_KEY:
+                # A more formal system that doesn't rely on hardcoded variables or indices would make this easier, but we're doing this for now.
+                # Assume Ezzy is always units[0] and the Monster is always units[1]
+                if self.grid[i][j] == self.units[0]:
                     pygame.draw.rect(screen, (0, 0, 255), rect)
-                elif self.grid[i][j] == MON_KEY:
+                elif self.grid[i][j] == self.units[1]:
                     pygame.draw.rect(screen, (255, 0, 0), rect)
                 else:
                     pygame.draw.rect(screen, (255, 255, 255), rect, 1)
+        self.sprite_group.draw(screen)
 
     
-    def move_entity(self, entity_key, destination):
-
+    def move_entity(self, destination):
         if destination[0] in range(self.width) and destination[1] in range(self.height):
-            if entity_key == EZ_KEY:
-                self.player_pos = destination
             self.set_positions()
             return True
         else:

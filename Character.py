@@ -1,9 +1,9 @@
-EZ_KEY = 1
+from WorldObject import WorldObject
 
-class Character:
+class Character(WorldObject):
 
     def __init__(self, pos=(0, 0)):
-        self.pos = pos
+        super().__init__(pos)
 
     def move(self, Board, dir):
         old_pos = self.pos
@@ -18,7 +18,8 @@ class Character:
             dx = 1
 
         self.pos = (self.pos[0] + dx, self.pos[1] + dy)
-        if Board.move_entity(EZ_KEY, self.pos):
+
+        if Board.move_entity(self.pos):
             return f"Player character moved to {self.pos}"
         else:
             self.pos = old_pos
